@@ -4,6 +4,8 @@ require("dotenv").config();
 const app =express();
 const mongoose = require("mongoose");
 
+const connectDB = require("./config/db");
+
 //Middleware
 app.use(express.json());
 //Home route
@@ -13,9 +15,19 @@ app.get("/",(req,res)=>{
         message :"Cloud Task API V2 is running successfully"
     });
 });
-// Start Server
+
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT,()=>{
-    console.log(`Server is running in ${PORT}`);
-});
+// connectDB();
+// app.listen(PORT,()=>{
+//     console.log(`Server is running in ${PORT}`);
+// }); direct starting server
+
+const startServer = async () => {
+    await connectDB();
+    app.listen(PORT, () => {
+        console.log(`Server is running on port ${PORT}`);
+    });
+};//server starts only after database is connected 
+startServer();
+// Start Server
