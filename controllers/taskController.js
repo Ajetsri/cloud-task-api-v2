@@ -1,5 +1,4 @@
 const Task = require("../models/Task");
-const task =require("../models/Task");
 
 //create task 
 const createTask= async(req, res) => {

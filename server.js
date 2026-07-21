@@ -6,8 +6,11 @@ const mongoose = require("mongoose");
 
 const connectDB = require("./config/db");
 
+const taskRoutes=require("./routes/taskRoutes");
+
 //Middleware
 app.use(express.json());
+app.use("/api/tasks",taskRoutes);
 //Home route
 app.get("/",(req,res)=>{
     res.json({
