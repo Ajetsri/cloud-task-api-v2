@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const taskSchema = new mongoose.Schema(
     {
         task: {
-            type: String,
+            type : String,
             required: [true, "Task is required"],//for empty req {}
             trim: true,//trims spaces
             minLength: [3,"Task must be at least 3 characters"],
