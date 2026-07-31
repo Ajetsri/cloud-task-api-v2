@@ -105,7 +105,8 @@ const deleteTask = async(req,res) => {
         }
         res.status(200).json({
             success : true,
-            message :"Task deleted successfully"
+            message :"Task deleted successfully",
+            data : task  //returns document which is deleted
             
         });
 

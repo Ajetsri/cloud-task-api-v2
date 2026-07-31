@@ -8,9 +8,13 @@ const connectDB = require("./config/db");
 
 const taskRoutes=require("./routes/taskRoutes");
 
+const logger = require("./middleware/logger");
+
 //Middleware
 app.use(express.json());
+app.use(logger);
 app.use("/api/tasks",taskRoutes);
+
 //Home route
 app.get("/",(req,res)=>{
     res.json({
