@@ -47,7 +47,7 @@ const getTaskByID = async(req,res) => {
         if(!task){
             return res.status(404).json({
                 success : false,
-                data :"Task not Found"
+                message:"Task not found"
             });
         }
         res.status(200).json({
@@ -74,7 +74,7 @@ const updateTask =async(req,res) => {
                 runValidators : true
             }
         );
-        if(!Task){
+        if(!task){
             return res.status(404).json({
                 success : false,
                 message :"Task not found"

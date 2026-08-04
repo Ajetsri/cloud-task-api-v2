@@ -2,6 +2,7 @@ const express = require("express");
 require("dotenv").config();
 
 const app =express();
+const errorHandler = require("./middleware/errorHandler");// errorHandler middleware
 const mongoose = require("mongoose");
 
 const connectDB = require("./config/db");
@@ -14,6 +15,7 @@ const logger = require("./middleware/logger");
 app.use(express.json());
 app.use(logger);
 app.use("/api/tasks",taskRoutes);
+app.use(errorHandler);
 
 //Home route
 app.get("/",(req,res)=>{
