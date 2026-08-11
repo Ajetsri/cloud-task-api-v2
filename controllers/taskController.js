@@ -13,7 +13,13 @@ const createTask= asyncHandler(async(req, res) => {
 });
 //getAllTasks 
 const getAllTasks = asyncHandler(async(req, res) => {
-        const tasks = await Task.find();
+        const page = parseInt(req.query.page)||1;
+        const limit = parseInt(req.query.limit)||10;
+        const skip = (page - 1) * limit;
+        const tasks = await Task.find()
+                                .skip(skip)
+                                .limit(limit);
+        
 
         res.status(200).json({
             success: true,
@@ -27,10 +33,7 @@ const getTaskByID = asyncHandler(async(req,res) => {
         const task = await Task.findById(req.params.id);
 
         if(!task){
-            return res.status(404).json({
-                success : false,
-                message:"Task not found"
-            });
+            throw new AppError("Task not found",404);
         }
         res.status(200).json({
             success : true,
@@ -48,10 +51,7 @@ const updateTask =asyncHandler(async(req,res) => {
             }
         );
         if(!task){
-            return res.status(404).json({
-                success : false,
-                message :"Task not found"
-            });
+            throw new AppError("Task not found",404);
         }
         res.status(200).json({
             success : true,
@@ -62,10 +62,7 @@ const updateTask =asyncHandler(async(req,res) => {
 const deleteTask = asyncHandler(async(req,res) => {
         const task =await Task.findByIdAndDelete(req.params.id);
         if(!task){
-            return res.status(404).json({
-                success : false,
-                message: "Task not Found"
-            });
+            throw new AppError("Task not found",404);
         }
         res.status(200).json({
             success : true,
