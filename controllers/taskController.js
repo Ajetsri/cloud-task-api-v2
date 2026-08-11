@@ -16,6 +16,9 @@ const getAllTasks = asyncHandler(async(req, res) => {
         const page = parseInt(req.query.page)||1;
         const limit = parseInt(req.query.limit)||10;
         const skip = (page - 1) * limit;
+        const totalTasks = await Task.countDocuments();//Get total number of tasks
+        const totalPages = Math.ceil(totalTasks / limit);//Calculate total pages
+
         const tasks = await Task.find()
                                 .skip(skip)
                                 .limit(limit);
@@ -24,6 +27,10 @@ const getAllTasks = asyncHandler(async(req, res) => {
         res.status(200).json({
             success: true,
             count: tasks.length,
+            page: page,
+            limit: limit,
+            totalTasks: totalTasks,
+            totalPages: totalPages,
             data: tasks
         });
 
