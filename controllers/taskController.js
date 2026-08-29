@@ -41,6 +41,14 @@ const getAllTasks = asyncHandler(async (req, res) => {
             }
             filter.completed = req.query.completed === "true";
         }
+    if (req.query.search) {
+        filter.task = {
+            $regex: req.query.search,
+            $options: "i"
+        };
+    
+    }
+    
     const tasks = await Task.find(filter)
         .sort(sort)
         .skip(skip)
