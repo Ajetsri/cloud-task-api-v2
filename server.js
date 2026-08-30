@@ -11,11 +11,14 @@ const taskRoutes=require("./routes/taskRoutes");
 
 const logger = require("./middleware/logger");
 
+const authRoutes = require("./routes/authRoutes");
+
 //Middleware
 app.use(express.json());
 app.use(logger);
 app.use("/api/tasks",taskRoutes);
 app.use(errorHandler);
+app.use("/api/auth", authRoutes);
 
 //Home route
 app.get("/",(req,res)=>{
