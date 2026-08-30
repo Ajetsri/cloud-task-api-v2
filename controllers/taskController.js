@@ -14,8 +14,22 @@ const createTask= asyncHandler(async(req, res) => {
 //getAllTasks 
 const getAllTasks = asyncHandler(async (req, res) => {
 
-    const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 10;
+    const page = req.query.page
+        ? parseInt(req.query.page)
+        : 1;
+    
+    const limit = req.query.limit
+        ? parseInt(req.query.limit)
+        : 10;
+
+    if (isNaN(page) || page < 1) 
+        {
+            throw new AppError("Page must be a positive number", 400);
+        }
+    if (isNaN(limit) || limit < 1 || limit > 100) 
+        {
+            throw new AppError("Limit must be between 1 and 100", 400);
+        }
     if (page < 1) 
         {
             throw new AppError("Page must be greater than 0", 400);
